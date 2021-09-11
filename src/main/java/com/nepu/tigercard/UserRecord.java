@@ -26,24 +26,22 @@ public class UserRecord {
   
   public void updateDailyCapRecord(LocalDateTime journeyDate, int capAmount) {
     var startOfDay = dateTimeUtil.resetToStartOfDay(journeyDate);
-    if (dailyCapRecord.getStartDate() == null || !dailyCapRecord.getStartDate().equals(startOfDay)) {
-      dailyCapRecord.setStartDate(startOfDay);
-      dailyCapRecord.setCapAmount(capAmount);
-      dailyCapRecord.setSpentAmount(0);
-      return;
-    }
-    dailyCapRecord.setCapAmount(Math.max(dailyCapRecord.getCapAmount(), capAmount));
+    updateCapRecord(dailyCapRecord, startOfDay, capAmount);
   }
 
   public void updateWeeklyCapRecord(LocalDateTime journeyDate, int capAmount) {
     var startOfWeek = dateTimeUtil.resetToStartOfWeek(journeyDate);
-    if (weeklyCapRecord.getStartDate() == null || !weeklyCapRecord.getStartDate().equals(startOfWeek)) {
-      weeklyCapRecord.setStartDate(startOfWeek);
-      weeklyCapRecord.setCapAmount(capAmount);
-      weeklyCapRecord.setSpentAmount(0);
+    updateCapRecord(weeklyCapRecord, startOfWeek, capAmount);
+  }
+
+  private void updateCapRecord(CapRecord capRecord, LocalDateTime startDate, int capAmount) {
+    if (capRecord.getStartDate() == null || !capRecord.getStartDate().equals(startDate)) {
+      capRecord.setStartDate(startDate);
+      capRecord.setCapAmount(capAmount);
+      capRecord.setSpentAmount(0);
       return;
     }
-    weeklyCapRecord.setCapAmount(Math.max(weeklyCapRecord.getCapAmount(), capAmount));
+    capRecord.setCapAmount(Math.max(capRecord.getCapAmount(), capAmount));
   }
 
   public void updateDailySpentAmount(int amount) {
