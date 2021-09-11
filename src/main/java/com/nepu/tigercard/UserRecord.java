@@ -36,12 +36,16 @@ public class UserRecord {
 
   private void updateCapRecord(CapRecord capRecord, LocalDateTime startDate, int capAmount) {
     if (capRecord.getStartDate() == null || !capRecord.getStartDate().equals(startDate)) {
-      capRecord.setStartDate(startDate);
-      capRecord.setCapAmount(capAmount);
-      capRecord.setSpentAmount(0);
+      resetCapRecord(capRecord, startDate, capAmount);
       return;
     }
     capRecord.setCapAmount(Math.max(capRecord.getCapAmount(), capAmount));
+  }
+
+  private void resetCapRecord(CapRecord capRecord, LocalDateTime startDate, int capAmount) {
+    capRecord.setStartDate(startDate);
+    capRecord.setCapAmount(capAmount);
+    capRecord.setSpentAmount(0);
   }
 
   public void updateDailySpentAmount(int amount) {
