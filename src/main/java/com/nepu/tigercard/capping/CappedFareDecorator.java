@@ -2,10 +2,10 @@ package com.nepu.tigercard.capping;
 
 import com.nepu.tigercard.fare.FareHolder;
 
-public class CapDecorator extends FareDecorator {
+public class CappedFareDecorator extends FareDecorator {
   private final CapRecord capRecord;
 
-  public CapDecorator(FareHolder fareHolder, CapRecord capRecord) {
+  public CappedFareDecorator(FareHolder fareHolder, CapRecord capRecord) {
     super(fareHolder);
     this.capRecord = capRecord;
   }

@@ -11,10 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CapDecoratorTest {
+public class CappedFareDecoratorTest {
   private CapRecord capRecord;
   private FareHolder fareHolder;
-  private CapDecorator capDecorator;
+  private CappedFareDecorator cappedFareDecorator;
 
   @BeforeEach
   void setUp() {
@@ -22,14 +22,14 @@ public class CapDecoratorTest {
     capRecord.setSpentAmount(20);
     capRecord.setCapAmount(100);
     fareHolder = mock(FareHolder.class);
-    capDecorator = new CapDecorator(fareHolder, capRecord);
+    cappedFareDecorator = new CappedFareDecorator(fareHolder, capRecord);
   }
 
   @Test
   @DisplayName("Should return full fare when cap is not reached")
   void testReturnFulLFare() {
     when(fareHolder.getFare(false)).thenReturn(40);
-    var fare = capDecorator.getFare(false);
+    var fare = cappedFareDecorator.getFare(false);
     verify(fareHolder, times(1)).getFare(false);
     assertEquals(fare, 40, "fare must be 40");
   }
@@ -38,7 +38,7 @@ public class CapDecoratorTest {
   @DisplayName("Should return partial fare when cap is reached")
   void testReturnPartialFare() {
     when(fareHolder.getFare(false)).thenReturn(100);
-    var fare = capDecorator.getFare(false);
+    var fare = cappedFareDecorator.getFare(false);
     verify(fareHolder, times(1)).getFare(false);
     assertEquals(fare, 80, "fare must be 80");
   }
@@ -48,7 +48,7 @@ public class CapDecoratorTest {
   void testReturnZeroFare() {
     capRecord.setSpentAmount(100);
     when(fareHolder.getFare(false)).thenReturn(40);
-    var fare = capDecorator.getFare(false);
+    var fare = cappedFareDecorator.getFare(false);
     verify(fareHolder, times(1)).getFare(false);
     assertEquals(fare, 0, "fare must be 0");
   }

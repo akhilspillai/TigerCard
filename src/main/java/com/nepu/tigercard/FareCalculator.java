@@ -1,6 +1,6 @@
 package com.nepu.tigercard;
 
-import com.nepu.tigercard.capping.CapDecorator;
+import com.nepu.tigercard.capping.CappedFareDecorator;
 import com.nepu.tigercard.capping.FareDecorator;
 import com.nepu.tigercard.fare.FareHolderFactory;
 import com.nepu.tigercard.util.DateTimeUtil;
@@ -30,8 +30,8 @@ public class FareCalculator {
     userRecord.updateDailyCapRecord(journey.date(), fareHolder.getDailyCappedFare());
     userRecord.updateWeeklyCapRecord(journey.date(), fareHolder.getWeeklyCappedFare());
 
-    FareDecorator fareDecorator = new CapDecorator(fareHolder, userRecord.getDailyCapRecord());
-    fareDecorator = new CapDecorator(fareDecorator, userRecord.getWeeklyCapRecord());
+    FareDecorator fareDecorator = new CappedFareDecorator(fareHolder, userRecord.getDailyCapRecord());
+    fareDecorator = new CappedFareDecorator(fareDecorator, userRecord.getWeeklyCapRecord());
 
     var isPeak = dateTimeUtil.isPeakHour(journey.date());
     var fare = fareDecorator.getFare(isPeak);
