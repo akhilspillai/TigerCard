@@ -2,6 +2,12 @@ package com.nepu.tigercard.fare;
 
 
 public class FareHolderFactory {
+  /**
+   * A factory method which creates FareHolder objects based on the from and to zones of a journey.
+   * @param fromZone
+   * @param toZone
+   * @return a FareHolder obj.
+   */
   public static FareHolder getFareHolder(String fromZone, String toZone) {
     var journeyType = fromZone + "-" + toZone;
     return switch (journeyType) {

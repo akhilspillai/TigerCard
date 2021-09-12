@@ -5,6 +5,9 @@ import com.nepu.tigercard.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
 
+/**
+ * A class to hold user's data related to daily and weekly cap.
+ */
 public class UserRecord {
   private final DateTimeUtil dateTimeUtil;
   private final CapRecord dailyCapRecord;
@@ -23,12 +26,18 @@ public class UserRecord {
   public CapRecord getWeeklyCapRecord() {
     return weeklyCapRecord;
   }
-  
+
+  /**
+   * Updates data related to daily cap based on the current journey.
+   */
   public void updateDailyCapRecord(LocalDateTime journeyDate, int capAmount) {
     var startOfDay = dateTimeUtil.resetToStartOfDay(journeyDate);
     updateCapRecord(dailyCapRecord, startOfDay, capAmount);
   }
 
+  /**
+   * Updates data related to weekly cap based on the current journey.
+   */
   public void updateWeeklyCapRecord(LocalDateTime journeyDate, int capAmount) {
     var startOfWeek = dateTimeUtil.resetToStartOfWeek(journeyDate);
     updateCapRecord(weeklyCapRecord, startOfWeek, capAmount);

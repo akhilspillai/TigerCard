@@ -27,10 +27,13 @@ public class FareCalculator {
   private int calculateFare(JourneyRecord journey) {
     var fareHolder = FareHolderFactory.getFareHolder(journey.fromZone(), journey.toZone());
 
+    // update capping details of the user based on the current journey
     userRecord.updateDailyCapRecord(journey.date(), fareHolder.getDailyCappedFare());
     userRecord.updateWeeklyCapRecord(journey.date(), fareHolder.getWeeklyCappedFare());
 
+    // apply daily capping
     FareDecorator fareDecorator = new CappedFareDecorator(fareHolder, userRecord.getDailyCapRecord());
+    // apply weekly capping
     fareDecorator = new CappedFareDecorator(fareDecorator, userRecord.getWeeklyCapRecord());
 
     var isPeak = dateTimeUtil.isPeakHour(journey.date());

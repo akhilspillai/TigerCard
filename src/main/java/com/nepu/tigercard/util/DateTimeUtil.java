@@ -7,11 +7,11 @@ import java.time.LocalTime;
 public class DateTimeUtil {
   public boolean isPeakHour(LocalDateTime dateTime) {
     if (isWeekend(dateTime)) {
-      return isTimeBetween(dateTime, 9, 0, 11, 0)
-          || isTimeBetween(dateTime, 18, 0, 22, 0);
+      return isTimeBetween(dateTime.toLocalTime(), LocalTime.parse("09:00"), LocalTime.parse("11:00"))
+          || isTimeBetween(dateTime.toLocalTime(), LocalTime.parse("18:00"), LocalTime.parse("22:00"));
     }
-    return isTimeBetween(dateTime, 7, 0, 10, 30)
-        || isTimeBetween(dateTime, 17, 0, 20, 0);
+    return isTimeBetween(dateTime.toLocalTime(), LocalTime.parse("07:00"), LocalTime.parse("10:30"))
+        || isTimeBetween(dateTime.toLocalTime(), LocalTime.parse("17:00"), LocalTime.parse("20:00"));
   }
 
   private boolean isWeekend(LocalDateTime dateTime) {
@@ -19,11 +19,8 @@ public class DateTimeUtil {
     return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
   }
 
-  private boolean isTimeBetween(LocalDateTime dateTime, int startHour, int startMin, int endHour, int endMin) {
-    int hour = dateTime.getHour();
-    int min = dateTime.getMinute();
-    return (hour > startHour || (hour == startHour && min >= startMin))
-        && (hour < endHour || (hour == endHour && min <= endMin));
+  private boolean isTimeBetween(LocalTime dateTime, LocalTime startTime, LocalTime endTime) {
+    return dateTime.isAfter(startTime) && dateTime.isBefore(endTime);
   }
 
   public LocalDateTime resetToStartOfWeek(LocalDateTime dateTime) {
